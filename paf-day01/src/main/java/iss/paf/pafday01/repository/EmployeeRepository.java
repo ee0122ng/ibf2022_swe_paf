@@ -29,13 +29,13 @@ public class EmployeeRepository {
     private final String FINDALLSQL = "select e.id as emp_id, e.first_name, e.last_name, e.salary, " + 
     "d.id as dep_id, d.full_name, d.relationship, d.birth_date " +
     "from employee as e " +
-    "inner join dependent as d " +
+    "left join dependent as d " +
     "on e.id = d.employee_id";
 
     private final String FINDBYIDSQL = "select e.id as emp_id, e.first_name, e.last_name, e.salary, " + 
         "d.id as dep_id, d.full_name, d.relationship, d.birth_date " +
         "from employee as e " +
-        "inner join dependent as d " +
+        "left join dependent as d " +
         "on e.id = d.employee_id " +
         "where e.id = ?";
 
