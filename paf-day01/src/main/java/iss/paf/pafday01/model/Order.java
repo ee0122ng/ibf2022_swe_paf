@@ -1,6 +1,5 @@
 package iss.paf.pafday01.model;
 
-import java.sql.Time;
 import java.time.LocalDateTime;
 
 public class Order {

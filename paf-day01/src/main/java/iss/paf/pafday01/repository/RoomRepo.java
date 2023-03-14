@@ -1,7 +1,6 @@
 package iss.paf.pafday01.repository;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +11,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
 import org.springframework.jdbc.core.PreparedStatementSetter;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import iss.paf.pafday01.model.Room;
@@ -104,6 +102,7 @@ public class RoomRepo implements IRoomRepo {
 
         int updated = 0;
 
+        // return number of affected rows
         updated = jdbcTemplate.update(updateRoomPriceById, new PreparedStatementSetter() {
 
             @Override

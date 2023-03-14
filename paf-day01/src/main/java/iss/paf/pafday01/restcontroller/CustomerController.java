@@ -27,7 +27,7 @@ public class CustomerController {
     }
     
     @GetMapping(path={"/filter"})
-    public List<Customer> getCustomersByLimitOffset(@RequestParam(required=true) MultiValueMap<String, String> query) {
+    public List<Customer> getCustomersByLimitOffset(@RequestParam MultiValueMap<String, String> query) {
 
         Integer limit = Integer.valueOf(query.getFirst("limit"));
         Integer offset = Integer.valueOf(query.getFirst("offset"));

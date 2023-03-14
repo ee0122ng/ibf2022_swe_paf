@@ -1,5 +1,6 @@
 package iss.paf.pafday01.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Employee {
@@ -9,7 +10,7 @@ public class Employee {
     private String lastName;
     private Float salary = 0f;
     // one employee can have many dependents
-    private List<Dependent> dependents;
+    private List<Dependent> dependents = new ArrayList<>();
 
     public Employee() {
     }
