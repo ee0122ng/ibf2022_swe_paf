@@ -5,8 +5,10 @@ import java.sql.SQLException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCallback;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
 import iss.paf.pafday05transaction.model.BankAccount;
@@ -20,15 +22,16 @@ public class BankAccountRepo {
     private static final String CREATE_ACCOUNT_SQL = "insert into accounts (full_name, is_active, acc_type, balance) values (?, ?, ?, ?)";
     private static final String CHECK_BALANCE_SQL = "select balance from accounts where id = ?";
     private static final String GET_ACCOUNT_SQL = "select * from accounts where id = ?";
-    private static final String WITHDRAWAL_SQL = "update accounts set (balance = balance - ?) where id = ?";
-    private static final String DEPOSIT_SQL = "update accounts set (balance = balance + ?) where id = ?";
+    // NOTE: after set cannot insert parentheses
+    private static final String WITHDRAWAL_SQL = "update accounts set balance = balance - ? where id = ?";
+    private static final String DEPOSIT_SQL = "update accounts set balance = balance + ? where id = ?";
 
     public Boolean checkBalance(Integer id, Float withdrawnAmount) {
 
         Boolean bWithdrawnBalanceAvailable = false;
 
         // condition 1: check if account balance is sufficient
-        Float balance = jdbcTemplate.queryForObject(CHECK_BALANCE_SQL, Float.class, id);
+        Float balance = jdbcTemplate.queryForObject(CHECK_BALANCE_SQL,Float.class, id);
         if (withdrawnAmount <= balance) {
 
             bWithdrawnBalanceAvailable = true;
@@ -39,7 +42,8 @@ public class BankAccountRepo {
 
     public BankAccount retrieveAccountDetails(Integer id) {
 
-        BankAccount acc = jdbcTemplate.queryForObject(GET_ACCOUNT_SQL, BankAccount.class, id);
+        // use of BeanPropertyRowMapper to map the instance of a self-defined class
+        BankAccount acc = jdbcTemplate.queryForObject(GET_ACCOUNT_SQL, BeanPropertyRowMapper.newInstance(BankAccount.class), id);
 
         return acc;
     }
@@ -57,7 +61,14 @@ public class BankAccountRepo {
 
         Integer result = 0;
 
-        result = jdbcTemplate.update(DEPOSIT_SQL, amount, id);
+        result = jdbcTemplate.update(DEPOSIT_SQL, new PreparedStatementSetter() {
+
+            @Override
+            public void setValues(PreparedStatement ps) throws SQLException {
+                ps.setFloat(1, amount);
+                ps.setInt(2, id);
+            }
+        });
 
         return result > 0 ? true : false;
     }

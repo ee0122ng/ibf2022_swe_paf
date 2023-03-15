@@ -29,6 +29,8 @@ public class PafDay05TransactionApplication {
 			System.exit(0);
 
 		}
+
+		app.run(args);
 	}
 
 }
