@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Customer List</title>
+    </head>
+    <body>
+
+        <div>
+            <h1>Customer Records</h1>
+        </div>
+
+        <div data-th-if="${#lists.size(customerList) > 0} ">
+            <table border="solid" style="width:100%; text-align: center;">
+
+                <thead>
+                    <tr>
+                        <th>Customer Id</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr data-th-each="cust : ${customerList}" data-th-object="${cust}">
+                        <td><a data-th-text="*{id}" data-th-href="@{/customers/{id} (id=${cust.id})}"></a></td>
+                        <td data-th-text="*{firstName}"></td>
+                        <td data-th-text="*{lastName}"></td>
+                        <td>
+                            <a data-th-href="@{customers/{id}/orders (id=${cust.id})}"><button>Order Details</button></a>
+                        </td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div data-th-unless="${#lists.size(customerList) > 0} ">
+            <p data-th-text="${error}"></p>
+        </div>
+
+        <br><br>
+
+        <div>
+            <a data-th-href="@{/invalidate}"><button>Back</button></a>
+        </div>
+
+    </body>
+</html>

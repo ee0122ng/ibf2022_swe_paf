@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Details</title>
+    </head>
+    <body>
+
+        <div>
+            <h3>Order Records for Customer Id <span data-th-text="${customer.id}"></span>: <span data-th-text="${#strings.concat(customer.firstName, ' ', customer.lastName)}"></span></h3>
+        </div>
+
+        <div data-th-if="${#lists.size(orderList) > 0}">
+            <table border="solid" style="text-align: center; width:100%;">
+
+                <thead>
+                    <tr>
+                        <th>Order Id</th>
+                        <th>Order Date</th>
+                        <th>Shipped Date</th>
+                        <th>Shipper Id</th>
+                        <th>Ship Name</th>
+                        <th>Shipping Address</th>
+                        <th>Paid Date</th>
+                        <th>Status Id</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr data-th-each="order : ${orderList}" data-th-object="${order}">
+                        <td data-th-text="*{id}"></td>
+                        <td data-th-text="*{orderDate}"></td>
+                        <td data-th-text="*{shippedDate}"></td>
+                        <td data-th-text="*{shipperId}"></td>
+                        <td data-th-text="*{shipName}"></td>
+                        <td data-th-text="*{shipAddress}"></td>
+                        <td data-th-text="*{paidDate}"></td>
+                        <td data-th-text="*{statusId}"></td>
+                    </tr>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div data-th-unless="${#lists.size(orderList) > 0}">
+            <p data-th-text="${error}"></p>
+        </div>
+
+        <br><br>
+
+        <a data-th-href="@{/customers}"><button>Back</button></a>
+
+
+    </body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Customer Details</title>
+    </head>
+    <body>
+
+        <div data-th-if="${customer} != null">
+
+            <h3>Personal Info</h3>
+            <div>
+                <table border="solid" style="width:100%; text-align: center;">
+
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr data-th-object="${customer}">
+                            <td data-th-text="*{firstName}"></td>
+                            <td data-th-text="*{lastName}"></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+
+            <br><br>
+    
+            <h3>Contact Details</h3>
+            <div>
+                <table border="solid" style="width:100%; text-align: center;">
+
+                    <thead>
+                        <tr>
+                            <th>Mobile Phone</th>
+                            <th>Home Phone</th>
+                            <th>Email Adress</th>
+                            <th>Home Address</th>
+                            <th>City</th>
+                            <th>State/Province</th>
+                            <th>Postal Code</th>
+                            <th>Country</th>
+                            <th>Webpage</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr data-th-object="${customer}">
+                            <td data-th-text="*{mobilePhone}"></td>
+                            <td data-th-text="*{homePhone}"></td>
+                            <td data-th-text="*{emailAddress}"></td>
+                            <td data-th-text="*{address}"></td>
+                            <td data-th-text="*{cityName}"></td>
+                            <td data-th-text="*{stateProvince}"></td>
+                            <td data-th-text="*{zipPostalCode}"></td>
+                            <td data-th-text="*{countryRegion}"></td>
+                            <td data-th-text="*{webPage}"></td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+
+            <br><br>
+    
+            <h3>Professional Profile</h3>
+            <div>
+                <table border="solid" style="width:100%; text-align: center;">
+
+                    <thead>
+                        <tr>
+                            <th>Company Name</th>
+                            <th>Job Title</th>
+                            <th>Business Phone</th>
+                            <th>Fax Number</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr data-th-object="${customer}">
+                            <td data-th-text="*{company}"></td>
+                            <td data-th-text="*{jobTitle}"></td>
+                            <td data-th-text="*{businessPhone}"></td>
+                            <td data-th-text="*{faxNumber}"></td>
+                        </tr>
+                    </tbody>
+                    
+                </table>
+            </div>
+
+        </div>
+
+        <div data-th-unless="${customer} == null">
+            <p data-th-text="${error}"></p>
+        </div>
+
+        <br><br>
+
+        <div>
+            <a data-th-href="@{/customers}"><button>Back</button></a>
+            <a data-th-href="@{/customers/{id}/orders (id=${customer.id})}"><button style="background-color: aqua;">Order Histories</button></a>
+        </div>
+
+    </body>
+</html>
