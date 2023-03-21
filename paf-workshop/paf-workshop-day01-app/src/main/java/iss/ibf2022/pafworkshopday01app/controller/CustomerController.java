@@ -39,7 +39,7 @@ public class CustomerController {
         String sessionLimit = (String) session.getAttribute("sessionLimit");
         String sessionOffset = (String) session.getAttribute("sessionOffset");
 
-        System.out.println(">>> session limit : " + sessionLimit);
+        // System.out.println(">>> session limit : " + sessionLimit);
 
         // set to default value if either limit or offset is not provided
         if (null == form.getFirst("limit") || form.getFirst("limit").isEmpty()) {
