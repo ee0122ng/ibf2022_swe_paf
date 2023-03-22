@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RSVP Status</title>
+    </head>
+    <body>
+        <div>
+            <h3>Your RSVP Status: <span data-th-text="${status}"></span></h3>
+        </div>
+
+        <span>
+            <p data-th-text="${message}"></p>
+        </span>
+
+        <br><br>
+        
+        <a data-th-href="@{/rsvps}"><button type="submit">Home</button></a>
+
+    </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RSVP System</title>
+    </head>
+    <body>
+        <div>
+            <h3>RSVP Record</h3>
+        </div>
+
+        <div>
+            <form method="POST" data-th-action="@{/rsvp/addnew}" data-th-object="${rsvp}">
+                <label for="">Name</label>
+                <br>
+                <input type="text" name="customerName" size="30" placeholder="key name" data-th-field="*{customerName}">
+                <div data-th-if="${#fields.hasErrors('customerName')}">
+                    <p data-th-errors="*{customerName}" style="color:brown"></p>
+                </div>
+
+                <br><br>
+
+                <label for="">Email</label>
+                <br>
+                <input type="text" name="email" size="30" placeholder="key email" data-th-field="*{email}">
+                <div data-th-if="${#fields.hasErrors('email')}">
+                    <p data-th-errors="*{email}" style="color:brown"></p>
+                </div>
+
+                <br><br>
+
+                <label for="">Phone</label>
+                <br>
+                <input type="text" name="phone" size="30" placeholder="key phone number" data-th-field="*{phone}">
+                <div data-th-if="${#fields.hasErrors('phone')}">
+                    <p data-th-errors="*{phone}" style="color:brown"></p>
+                </div>
+
+                <br><br>
+
+                <label for="">Confirmation Date</label>
+                <br>
+                <input type="date" name="confirmationDate" size="30" data-th-field="*{confirmationDate}">
+                <div data-th-if="${#fields.hasErrors('confirmationDate')}">
+                    <p data-th-errors="*{confirmationDate}" style="color:brown"></p>
+                </div>
+
+                <br><br>
+
+                <label for="">Comments</label>
+                <br>
+                <textarea name="comments" id="" cols="30" rows="10" placeholder="leave your comment here" data-th-field="*{comments}"></textarea>
+                <div data-th-if="${#fields.hasErrors('comments')}">
+                    <p data-th-errors="*{comments}" style="color:brown"></p>
+                </div>
+
+                <br><br>
+
+                <div>
+                    <button type="submit" formmethod="GET" formaction="/rsvp/home">Home</button>
+                    <button type="submit" formmethod="POST" formaction="/rsvp/addnew" style="background-color: chartreuse;">Submit</button>
+                </div>
+
+            </form>
+
+        </div>
+    </body>
+</html>

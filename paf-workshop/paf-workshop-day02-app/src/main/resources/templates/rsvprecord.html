@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Reservations Details</title>
+    </head>
+    <body>
+        <div>
+            <h3>Reservations Records</h3>
+        </div>
+
+        <div>
+            <a data-th-href="@{/rsvp/addnew}"><button type="submit" style="background-color: aqua;">Create New RSVP</button></a>
+        </div>
+
+        <br><br>
+
+        <div data-th-if="${status} == 200">
+            <table border="solid" style="width: 100%; text-align: center;">
+                <thead>
+                    <tr>
+                        <th>RSVP Id</th>
+                        <th>Customer Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Confirmation Date</th>
+                        <th>Comments</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr data-th-each="rsvp : ${rsvps}" data-th-object="${rsvp}">
+                        <td data-th-text="*{id}"></td>
+                        <td data-th-text="*{customerName}"></td>
+                        <td data-th-text="*{email}"></td>
+                        <td data-th-text="*{phone}"></td>
+                        <td data-th-text="*{confirmationDate}"></td>
+                        <td data-th-text="*{comments}"></td>
+                        <td>
+                            <a data-th-href="@{/rsvp/{email} (email=${rsvp.email})}">Update</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div data-th-unless="${status} == 200">
+            <p data-th-text="${error}"></p>
+        </div>
+
+    </body>
+</html>
