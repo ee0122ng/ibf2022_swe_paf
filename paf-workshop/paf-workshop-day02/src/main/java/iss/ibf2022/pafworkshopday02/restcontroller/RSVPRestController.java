@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +35,8 @@ public class RSVPRestController {
             return ResponseEntity.status(HttpStatus.OK).body(rsvpList);
 
         } catch (Exception ex) {
+
+            // throw new ResourceNotFoundException("No record found");
             String error = "No record found";
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
@@ -43,10 +46,12 @@ public class RSVPRestController {
     public ResponseEntity<Object> getRecordByName(@RequestParam String q) {
 
         try {
-            List<RSVP> rsvpList = rsvpSvc.retrieveRecordByName(q);
-            return ResponseEntity.status(HttpStatus.OK).body(rsvpList);
+            RSVP rsvp = rsvpSvc.retrieveRecordByName(q);
+            return ResponseEntity.status(HttpStatus.OK).body(rsvp);
 
         } catch (Exception ex) {
+
+            // throw new ResourceNotFoundException("No record found for %s".formatted(q));
             String error = "No record found for %s".formatted(q);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }
@@ -76,24 +81,32 @@ public class RSVPRestController {
             return ResponseEntity.status(HttpStatus.CREATED).body("Record inserted successfully. New Id=%d created".formatted(generatedId));
 
         } catch (Exception ex) {
+
+            // throw new ResourceNotFoundException("Failed to insert the record");
             String error = "Failed to insert the record";
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
             
         }
     }
 
-    @PutMapping(path={"/rsvp/{email}"})
-    public ResponseEntity<Object> updateRecord(@PathVariable String email, @RequestBody MultiValueMap<String, String> form) throws ParseException {
+    // why cannot use requestbody here???
+    // form cannot only be submitted as POST / GET method
+    // by default, form is submitted as GET through browser
+    @PutMapping(path={"/rsvp/{email}"}, consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ResponseEntity<Object> updateRecord(@PathVariable String email, @RequestParam MultiValueMap<String, String> form) throws ParseException {
 
-        if (rsvpSvc.findRecordByEmail(email) >= 0) {
+        Integer matchedId = rsvpSvc.findRecordByEmail(email);
+
+        if (matchedId >= 0) {
             RSVP rsvp = rsvpSvc.populateToRSVP(form);
-            rsvp.setId(rsvpSvc.findRecordByEmail(email));
+            rsvp.setId(matchedId);
             Integer updated = rsvpSvc.updateRecord(rsvp);
 
             return ResponseEntity.status(HttpStatus.CREATED).body("Update successfully. Total updated records = %d".formatted(updated));
 
         } else {
 
+            // throw new ResourceNotFoundException("No record found for email=%s".formatted(email));
             String error = "No record found for email=%s".formatted(email);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
         }

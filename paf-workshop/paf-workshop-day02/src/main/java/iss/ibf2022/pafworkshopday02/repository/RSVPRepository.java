@@ -36,15 +36,15 @@ public class RSVPRepository {
 
     }
 
-    public List<RSVP> getRsvpByName(String name) {
+    public RSVP getRsvpByName(String name) {
 
         // reformat name to wild card
         String sqlName = "%" + name + "%";
 
         try {
 
-            List<RSVP> rsvpList = jdbcTemplate.query(SELECT_BY_NAME_SQL, BeanPropertyRowMapper.newInstance(RSVP.class), sqlName);
-            return rsvpList;
+            RSVP rsvp = jdbcTemplate.queryForObject(SELECT_BY_NAME_SQL, BeanPropertyRowMapper.newInstance(RSVP.class), sqlName);
+            return rsvp;
 
         } catch (Exception ex) {
 

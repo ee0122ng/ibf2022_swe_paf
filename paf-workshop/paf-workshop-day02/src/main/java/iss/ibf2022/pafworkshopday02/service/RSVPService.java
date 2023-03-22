@@ -23,7 +23,7 @@ public class RSVPService {
         return rsvpRepo.getAllRsvp();
     }
     
-    public List<RSVP> retrieveRecordByName(String name) {
+    public RSVP retrieveRecordByName(String name) {
 
         return rsvpRepo.getRsvpByName(name);
     }
