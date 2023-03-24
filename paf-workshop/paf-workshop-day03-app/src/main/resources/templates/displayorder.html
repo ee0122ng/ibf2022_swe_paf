@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Order Details</title>
+    </head>
+    <body>
+        
+        <h3>Order Details for Order_Id: <span data-th-text="${orderId}"></span></h3>
+
+        <div data-th-if="${status} == 200">
+            <table border="solid" style="text-align: center; width:100%">
+                <thead>
+                    <tr>
+                        <th>Order Date</th>
+                        <th>Customer Id</th>
+                        <th>Total Cost</th>
+                        <th>Cost Price</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr data-th-each="order : ${orderList}" data-th-object="${order}">
+                        <td data-th-text="*{orderDate}"></td>
+                        <td data-th-text="*{customerId}"></td>
+                        <td data-th-text="*{totalCost}"></td>
+                        <td data-th-text="*{costPrice}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div data-th-unless="${status} == 200">
+            <strong>Status: <span data-th-text="${status}"></span></strong>
+            <p data-th-text="${error}"></p>
+        </div>
+
+        <br><br>
+
+        <a data-th-href="@{/order}"><button>Back</button></a>
+
+    </body>
+</html>
