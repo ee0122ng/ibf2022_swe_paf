@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Main</title>
+    </head>
+    <body>
+        <div>
+            <h3>Type of food</h3>
+        </div>
+
+        <div>
+            <form method="GET" data-th-action="@{/restaurant/type}">
+                <select name="cuisine" id="">
+                    <option data-th-each="t : ${type}" data-th-text="${t}" data-th-value="${t}"></option>
+                </select>
+                <br><br>
+                <div>
+                    <button type="submit">Get</button>
+                </div>
+            </form>
+        </div>
+        <hr>
+        <div data-th-each="t : ${type}">
+            <ul>
+                <a data-th-href="@{restaurant/{type} (type=${t})}">
+                    <li data-th-text="${t}"></li>
+                </a>
+            </ul>
+        </div>
+
+    </body>
+</html>
