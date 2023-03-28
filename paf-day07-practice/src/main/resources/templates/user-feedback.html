@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Feedback</title>
+    </head>
+    <body>
+        <h3>We Love Your Feedback</h3>
+
+        <div>
+            
+            <form method="POST" data-th-action="@{/show/{id}/comment (id = ${show.id})}" data-th-object="${feedback}">
+
+                <input type="hidden" data-th-field="${show.id}">
+
+                <div>
+                    <table border="solid">
+                        <thead>
+                            <tr>
+                                <th>Show Name</th>
+                                <th>Language</th>
+                                <th>Genres</th>
+                                <th>Current Rating</th>
+                                <th>Runtime</th>
+                                <th>Summary</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+                            <tr data-th-object="${show}">
+                                <td data-th-text="*{name}"></td>
+                                <td data-th-text="*{language}"></td>
+                                <td data-th-each="genre : ${show.genres}">
+                                    <ul>
+                                        <li data-th-text="${genre}"></li>
+                                    </ul>
+                                </td>
+                                <td data-th-text="*{rating}"></td>
+                                <td data-th-text="*{runtime}"></td>
+                                <td data-th-text="*{summary}"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <hr>
+                <p>Your Feedback</p>
+                <div>
+                    <label for="">Name:</label>
+                    <br>
+                    <input type="text" placeholder="your name" data-th-field="*{userName}">
+    
+                    <br><br>
+                    
+                    <label for="">Rating:</label>
+                    <br>
+                    <input type="number" min="0" max="10" step="0.1" data-th-field="*{rating}">
+    
+                    <br><br>
+    
+                    <label for="">Comments:</label>
+                    <br>
+                    <textarea name="" id="" cols="30" rows="10" data-th-field="*{comments}"></textarea>
+    
+                    <br><br>
+                </div>
+
+
+                <button type="submit">Post</button>
+
+            </form>
+
+        </div>
+
+    </body>
+</html>
