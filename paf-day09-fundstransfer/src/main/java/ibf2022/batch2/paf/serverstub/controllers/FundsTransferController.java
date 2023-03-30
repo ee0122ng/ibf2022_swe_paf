@@ -1,11 +1,13 @@
 package ibf2022.batch2.paf.serverstub.controllers;
 
+import java.io.StringReader;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.geo.GeoJsonMultiLineString;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +20,7 @@ import ibf2022.batch2.paf.serverstub.service.AccountService;
 import ibf2022.batch2.paf.serverstub.service.TransactionService;
 import jakarta.json.Json;
 import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
 
 @RestController
 @RequestMapping(path="/api")
@@ -30,7 +33,7 @@ public class FundsTransferController {
 	TransactionService tranSvc;
 
 	@PostMapping(path="/transfer")
-	public ResponseEntity<String> postTransfer(@RequestBody MultiValueMap<String, String> transferDetails) {
+	public ResponseEntity<String> postTransfer(@RequestBody String transferDetails) {
 
 		// Transfer successful return the following JSON object
 		// { "transactionId", "aTransactionId" }
@@ -38,12 +41,16 @@ public class FundsTransferController {
 		// Transfer failed return the following JSON object
 		// { "message", "Error message" }
 
-		// get the account name
-		String nameAccountFrom = transferDetails.getFirst("accountFrom");
-		String nameAccountTo = transferDetails.getFirst("accountTo");
-		Float amount = Float.valueOf(transferDetails.getFirst("amount"));
+		// request content-type is a json string
+		JsonReader jReader = Json.createReader(new StringReader(transferDetails));
+		JsonObject jObj = jReader.readObject();
 
-		System.out.printf(">>> sample: \n from:%s \n to:%s \n amount:%f".formatted(nameAccountFrom, nameAccountTo, amount));
+		// get the account name
+		String nameAccountFrom = jObj.getString("srcAcct");
+		String nameAccountTo = jObj.getString("destAcct");
+		Float amount = (float) jObj.getJsonNumber("amount").doubleValue();
+
+		System.out.println(">>> request: \n from:%s\n to:%s\n amount:%f".formatted(nameAccountFrom, nameAccountTo, amount));
 
 		try {
 			Transaction transaction = accSvc.transferFund(nameAccountFrom, nameAccountTo, amount);
@@ -56,6 +63,7 @@ public class FundsTransferController {
 
 			JsonObject jTransaction = Json.createObjectBuilder()
 				.add("transactionId", transaction.getId())
+				.add("date", new Date().toString())
 				.add("details", jAccount)
 				.build();
 
