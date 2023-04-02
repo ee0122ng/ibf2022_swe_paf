@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class PafDay08WorkshopApplication {
 
+
 	private static final Logger LOGGER = Logger.getLogger(PafDay08WorkshopApplication.class.getName());
 	
 	public static void main(String[] args) {
@@ -25,5 +26,4 @@ public class PafDay08WorkshopApplication {
 
 		app.run(args);
 	}
-
 }
