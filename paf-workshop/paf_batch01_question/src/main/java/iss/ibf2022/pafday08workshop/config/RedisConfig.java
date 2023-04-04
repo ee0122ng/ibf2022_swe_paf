@@ -21,8 +21,14 @@ public class RedisConfig {
     @Value("${spring.redis.port}")
     private Integer port;
 
-    @Value("${spring.redis.database}")
-    private Integer database;
+    // @Value("${spring.redis.database}")
+    // private Integer database;
+
+    @Value("${spring.redis.username}")
+    private String username;
+
+    @Value("${spring.redis.password}")
+    private String password;
 
     @Bean
     @Qualifier("my-redis")
@@ -32,9 +38,19 @@ public class RedisConfig {
         RedisStandaloneConfiguration config = new RedisStandaloneConfiguration();
 
         // setup redis environment
+        System.out.println(">>>host: " + host);
+        System.out.println(">>>port: " + port);
+        // System.out.println(">>>host: " + database);
+        System.out.println(">>>host: " + username);
+        System.out.println(">>>host: " + password);
         config.setHostName(host);
         config.setPort(port);
-        config.setDatabase(database);
+        // config.setDatabase(database);
+
+        if (null != password && null != username) {
+            config.setUsername(username);
+            config.setPassword(password);
+        }
 
         // configure jedis client and connection factory
         final JedisClientConfiguration jedisClient = JedisClientConfiguration.builder().build();

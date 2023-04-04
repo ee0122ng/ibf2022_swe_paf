@@ -17,14 +17,6 @@ public class PafDay08WorkshopApplication implements CommandLineRunner {
 		
 		SpringApplication app = new SpringApplication(PafDay08WorkshopApplication.class);
 
-		final String PWD = System.getenv("MYSQL_PWD");
-		if (null != PWD) {
-			app.setDefaultProperties(Collections.singletonMap("spring.datasource.password", PWD));
-		} else {
-			LOGGER.log(Level.INFO, "Password for mysql user not provided");
-			System.exit(0);
-		}
-
 		app.run(args);
 	}
 
