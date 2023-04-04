@@ -94,8 +94,12 @@ public class FundTransferController {
             fundTransfer.getFromAccount().set(0, fromAccount);
             fundTransfer.getFromAccount().set(idxFromAccount, fromAccountSwapped);
 
-            if (null!= form.getFirst("amount") || !form.getFirst("amount").isEmpty()) {
+            if (null == form.getFirst("amount") || form.getFirst("amount").isEmpty()) {
+                fundTransfer.setAmount(null);
+                
+            } else {
                 fundTransfer.setAmount(Float.valueOf(form.getFirst("amount")));
+                
             }
             
             model.addAttribute("fundTransfer", fundTransfer);
