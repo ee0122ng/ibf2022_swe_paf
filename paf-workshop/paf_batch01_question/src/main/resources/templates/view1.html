@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Transaction</title>
+    </head>
+    <body>
+
+        <div>
+
+            <table border="solid" align="center" data-th-object="${payload}">
+
+                <p>Your transfer of <span data-th-text="*{amount}"></span> from</p>
+                <p data-th-text="${#strings.concat(payload.accountFromName, ' (', payload.accountFromId, ') to')}"></p>
+                <p><span data-th-text="${#strings.concat(payload.accountToName, ' (', payload.accountToId, ')')}"></span></p>
+                <p>is successful.</p>
+
+                <br><br>
+
+                <p>Transaction id is <span data-th-text="*{transactionId}"></span></p>
+
+            </table>
+
+        </div>
+        
+    </body>
+</html>
